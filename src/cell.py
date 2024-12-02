@@ -11,22 +11,30 @@ class Cell():
         self.has_right_wall = True
         self.has_top_wall = True
         self.has_bottom_wall = True
-        self._x1 = top_left_corner.x
-        self._x2 = top_left_corner.x + WIDTH
-        self._y1 = top_left_corner.y
-        self._y2 = top_left_corner.y + WIDTH
+
         self._win = win
 
-    def draw(self):
+        self._set_coordinates(top_left_corner)
+
+    def _set_coordinates(self, top_left_corner: Point):
+        if top_left_corner:
+            self._x1 = top_left_corner.x
+            self._x2 = top_left_corner.x + WIDTH
+            self._y1 = top_left_corner.y
+            self._y2 = top_left_corner.y + WIDTH
+
+    def draw(self, top_left_corner: Point = None):
+        self._set_coordinates(top_left_corner)
+
         if self.has_left_wall:
             self._win.draw_line(
-                Line(Point(self._x1, self._y1), Point(self._x1, self._y1 + WIDTH)))
+                Line(Point(self._x1, self._y1), Point(self._x1, self._y2)))
         if self.has_right_wall:
             self._win.draw_line(
-                Line(Point(self._x1 + WIDTH, self._y1), Point(self._x1 + WIDTH, self._y1 + WIDTH)))
+                Line(Point(self._x2, self._y1), Point(self._x2, self._y2)))
         if self.has_top_wall:
             self._win.draw_line(
-                Line(Point(self._x1, self._y1), Point(self._x1 + WIDTH, self._y1)))
+                Line(Point(self._x1, self._y1), Point(self._x2, self._y1)))
         if self.has_bottom_wall:
             self._win.draw_line(
-                Line(Point(self._x1, self._y1 + WIDTH), Point(self._x1 + WIDTH, self._y1 + WIDTH)))
+                Line(Point(self._x1, self._y2), Point(self._x2, self._y2)))
