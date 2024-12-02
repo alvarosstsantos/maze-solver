@@ -1,4 +1,4 @@
-from line import Line
+from cell import Cell
 from point import Point
 from window import Window
 
@@ -6,7 +6,9 @@ from window import Window
 def main():
     win = Window(800, 600)
 
-    win.draw_line(Line(Point(0, 0), Point(800, 600)), "red")
+    cell = Cell(Point(50, 50), win)
+    cell.draw()
+
     win.wait_for_close()
 
 
