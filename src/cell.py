@@ -4,14 +4,13 @@ from window import Window
 
 
 class Cell():
-    def __init__(self, top_left_corner: Point, size: int, win: Window):
+    def __init__(self, top_left_corner: Point, size: int, win: Window = None):
         self.has_left_wall = True
         self.has_right_wall = True
         self.has_top_wall = True
         self.has_bottom_wall = True
         self.size = size
-
-        self._win = win
+        self.win = win
 
         self._set_coordinates(top_left_corner)
 
@@ -25,24 +24,30 @@ class Cell():
     def draw(self, top_left_corner: Point = None):
         self._set_coordinates(top_left_corner)
 
+        if not self.win:
+            return
+
         if self.has_left_wall:
-            self._win.draw_line(
+            self.win.draw_line(
                 Line(Point(self._x1, self._y1), Point(self._x1, self._y2)))
         if self.has_right_wall:
-            self._win.draw_line(
+            self.win.draw_line(
                 Line(Point(self._x2, self._y1), Point(self._x2, self._y2)))
         if self.has_top_wall:
-            self._win.draw_line(
+            self.win.draw_line(
                 Line(Point(self._x1, self._y1), Point(self._x2, self._y1)))
         if self.has_bottom_wall:
-            self._win.draw_line(
+            self.win.draw_line(
                 Line(Point(self._x1, self._y2), Point(self._x2, self._y2)))
 
-    def get_center_point(self):
+    def _get_center_point(self):
         return Point((self._x1 + self._x2) // 2, (self._y1 + self._y2) // 2)
 
     def draw_move(self, target_cell: "Cell", undo=False):
         fill_color = "gray" if undo else "red"
 
-        self._win.draw_line(Line(self.get_center_point(),
-                            target_cell.get_center_point()), fill_color)
+        if not self.win:
+            return
+
+        self.win.draw_line(Line(self._get_center_point(),
+                                target_cell._get_center_point()), fill_color)

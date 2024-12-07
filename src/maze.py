@@ -12,7 +12,7 @@ class Maze():
         num_rows: int,
         num_cols: int,
         cell_size: int,
-        win: Window,
+        win: Window = None,
     ):
         self.top_left_corner = top_left_corner
         self.num_rows = num_rows
@@ -45,5 +45,8 @@ class Maze():
         self.cells[i][j].draw()
 
     def _animate(self):
+        if not self.win:
+            return
+
         self.win.redraw()
         sleep(0.05)
