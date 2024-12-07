@@ -12,6 +12,8 @@ class Cell():
         self.size = size
         self.win = win
 
+        self.visited = False
+
         self._set_coordinates(top_left_corner)
 
     def _set_coordinates(self, top_left_corner: Point):
